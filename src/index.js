@@ -7,9 +7,11 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import MyCart from './pages/MyCart';
 import Order from './pages/Order';
-import VoiceOrder from './pages/VoiceOrder';
+import MyPage from './pages/MyPage';
 import NotFound from './pages/NotFound';
 import reportWebVitals from './reportWebVitals';
+import Admin from './pages/Admin';
+import Rider from './pages/Rider';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,9 @@ const router = createBrowserRouter([
       { path: '/menu', element: <Menu /> },
       { path: '/cart', element: <MyCart /> },
       { path: '/order', element: <Order /> },
-      { path: '/voiceorder', element: <VoiceOrder /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/admin', element: <Admin /> },
+      { path: '/rider', element: <Rider /> },
     ],
   },
 ]);

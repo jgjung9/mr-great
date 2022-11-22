@@ -1,5 +1,12 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { getDatabase, ref, onValue, get } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -15,25 +22,44 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+const database = getDatabase(app);
 
 export function login() {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // ...
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
+  signInWithPopup(auth, provider).catch(console.error);
+}
+
+export function logout() {
+  signOut(auth).catch(console.error);
+}
+
+export function onUserStateChange(callback) {
+  onAuthStateChanged(auth, async (user) => {
+    const updatedAdmin = user ? await adminUser(user) : null;
+    const updatedRider = updatedAdmin ? await riderUser(updatedAdmin) : null;
+    callback(updatedRider);
+  });
+}
+
+async function adminUser(user) {
+  return get(ref(database, 'admins')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const admins = snapshot.val();
+        const isAdmin = admins.includes(user.uid);
+        return { ...user, isAdmin };
+      }
+      return user;
+    });
+}
+
+async function riderUser(user) {
+  return get(ref(database, 'riders')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const riders = snapshot.val();
+        const isRider = riders.includes(user.uid);
+        return { ...user, isRider };
+      }
+      return user;
     });
 }
