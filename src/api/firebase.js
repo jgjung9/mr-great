@@ -6,7 +6,9 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getDatabase, ref, onValue, get } from 'firebase/database';
+import * as db from 'firebase/database';
+import * as st from 'firebase/storage';
+import uuid from 'react-uuid';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,7 +24,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-const database = getDatabase(app);
+const database = db.getDatabase(app);
+const storage = st.getStorage(app);
 
 export function login() {
   signInWithPopup(auth, provider).catch(console.error);
@@ -41,7 +44,8 @@ export function onUserStateChange(callback) {
 }
 
 async function adminUser(user) {
-  return get(ref(database, 'admins')) //
+  return db
+    .get(db.ref(database, 'admins')) //
     .then((snapshot) => {
       if (snapshot.exists()) {
         const admins = snapshot.val();
@@ -53,7 +57,8 @@ async function adminUser(user) {
 }
 
 async function riderUser(user) {
-  return get(ref(database, 'riders')) //
+  return db
+    .get(db.ref(database, 'riders')) //
     .then((snapshot) => {
       if (snapshot.exists()) {
         const riders = snapshot.val();
@@ -62,4 +67,24 @@ async function riderUser(user) {
       }
       return user;
     });
+}
+
+export async function addNewMenu(menu, imageURL) {
+  const id = uuid();
+  return db.set(db.ref(database, `menu/${menu.category}/${id}`), {
+    ...menu,
+    id,
+    price: parseInt(menu.price),
+    image: imageURL,
+    count: 0,
+  });
+}
+
+export async function uploadImage(name, file) {
+  const fileExtension = file.name.split('.')[1];
+  const fileRef = st.ref(storage, `image/${name}.${fileExtension}`);
+  return st
+    .uploadBytes(fileRef, file)
+    .then((snapshot) => st.getDownloadURL(snapshot.ref))
+    .catch(console.error);
 }

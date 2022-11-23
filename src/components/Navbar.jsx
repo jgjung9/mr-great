@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import User from '../components/User';
 import { useAuthContext } from './context/AuthContext';
+import Button from './ui/Button';
 
 export default function Navbar() {
   const { user, login, logout } = useAuthContext();
@@ -18,8 +19,8 @@ export default function Navbar() {
         {user && <User user={user}></User>}
         {user && user.isAdmin && <Link to='/admin'>Admin</Link>}
         {user && user.isRider && <Link to='/rider'>Rider</Link>}
-        {!user && <button onClick={login}>Login</button>}
-        {user && <button onClick={logout}>Logout</button>}
+        {!user && <Button text='Login' onClick={login} />}
+        {user && <Button text='Logout' onClick={logout} />}
       </nav>
     </header>
   );

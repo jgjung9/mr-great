@@ -1,5 +1,10 @@
 import React from 'react';
+import NewMenu from '../components/NewMenu';
 
 export default function Admin() {
-  return <div>Admin</div>;
+  return (
+    <div>
+      <NewMenu />
+    </div>
+  );
 }
