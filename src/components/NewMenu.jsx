@@ -45,7 +45,7 @@ export default function NewMenu() {
           alt='local file'
         />
       )}
-      <form className='flex flex-col px-96 ' onSubmit={handleSubmit}>
+      <form className='flex flex-col px-40 ' onSubmit={handleSubmit}>
         <input
           type='file'
           accept='image/*'
@@ -79,12 +79,11 @@ export default function NewMenu() {
         <input
           type='number'
           name='price'
-          value={menu.price}
+          value={menu.price ?? ''}
           placeholder='가격'
           required
           onChange={handleChange}
         />
-
         <Button
           text={isUploading ? 'Uploading..' : '메뉴 추가하기'}
           disalbed={isUploading}

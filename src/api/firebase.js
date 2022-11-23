@@ -88,3 +88,24 @@ export async function uploadImage(name, file) {
     .then((snapshot) => st.getDownloadURL(snapshot.ref))
     .catch(console.error);
 }
+
+export async function getAllMenu() {
+  const menuRef = db.ref(database, `menu`);
+  return db
+    .get(menuRef)
+    .then((snapshot) => {
+      const menu = snapshot.val();
+      return menu;
+    })
+    .catch(console.error);
+}
+
+export async function getMenuByCategory(category) {
+  const categoryRef = db.ref(database, `menu/${category}`);
+  return db.get(categoryRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
+}
