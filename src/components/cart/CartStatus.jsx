@@ -9,7 +9,7 @@ export default function CartStatus() {
   return (
     <div className='relative'>
       <span>Cart</span>
-      {menu.length > 0 && (
+      {menu && (
         <p className='w-6 h-6 text-center bg-blue-400 text-white font-bold rounded-full absolute -top-3 left-5'>
           +{menu.length}
         </p>

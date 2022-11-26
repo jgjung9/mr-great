@@ -5,7 +5,11 @@ export default function MenuCategory({ onClick }) {
   return (
     <div className='text-2xl border-2'>
       {category.map((c) => (
-        <button className='m-4' onClick={(e) => onClick(e, c)}>
+        <button
+          key={category.indexOf(c)}
+          className='m-4'
+          onClick={(e) => onClick(e, c)}
+        >
           {c === 'side' && 'Side'}
           {c === 'stake' && 'Stake'}
           {c === 'wine' && 'Wine'}

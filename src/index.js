@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import reportWebVitals from './reportWebVitals';
 import Admin from './pages/Admin';
 import Rider from './pages/Rider';
+import Order from './pages/Order';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: '/menu', element: <Menu /> },
       { path: '/menu/:id', element: <MenuDetail /> },
       { path: '/cart', element: <MyCart /> },
+      { path: '/order', element: <Order /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/admin', element: <Admin /> },
       { path: '/rider', element: <Rider /> },

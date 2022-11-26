@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { addNewMenu, uploadImage } from '../../api/firebase';
+import { uploadImage } from '../../api/firebase';
+import useMenu from '../../hooks/useMenu';
 import Button from '../ui/Button';
 
 export default function NewMenu() {
@@ -7,6 +8,7 @@ export default function NewMenu() {
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+  const { addMenu } = useMenu();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -23,12 +25,17 @@ export default function NewMenu() {
 
     uploadImage(menu.name, file)
       .then((imgURL) => {
-        addNewMenu(menu, imgURL).then(() => {
-          setSuccess(`메뉴가 추가되었습니다.`);
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-        });
+        addMenu.mutate(
+          { menu, url: imgURL },
+          {
+            onSuccess: () => {
+              setSuccess(`메뉴가 추가되었습니다.`);
+              setTimeout(() => {
+                setSuccess(null);
+              }, 4000);
+            },
+          }
+        );
       })
       .catch(console.error)
       .finally(() => setIsUploading(false));

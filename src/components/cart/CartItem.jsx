@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import { addOrupdateToCart, removeFromCart } from '../../api/firebase';
+import useCart from '../../hooks/useCart';
 
 const ICON_CLASS = 'transition-all cursor-pointer hover:scale-105 mx-1';
 
@@ -10,18 +10,19 @@ export default function CartItem({
   menu: { id, image, name, option, count, price },
   uid,
 }) {
+  const { addCart, removeCart } = useCart();
   const handlePlus = () => {
-    addOrupdateToCart(uid, { ...menu, count: count + 1 });
+    addCart.mutate({ uid, menu: { ...menu, count: count + 1 } });
   };
   const handleMinus = () => {
     if (count < 2) return;
-    addOrupdateToCart(uid, { ...menu, count: count - 1 });
+    addCart.mutate({ uid, menu: { ...menu, count: count - 1 } });
   };
-  const handleDelete = () => removeFromCart(uid, id);
+  const handleDelete = () => removeCart.mutate({ uid, menuId: id });
 
   return (
     <li className='flex justify-between my-2 items-center'>
-      <img src={image} alt={name} />
+      <img className='w-96' src={image} alt={name} />
       <div className='flex-1 justify-between ml-4'>
         <div className='basis-3/5'>
           <p className='text-lg'>{name}</p>

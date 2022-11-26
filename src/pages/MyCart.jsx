@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getCart } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import CartItem from '../components/cart/CartItem';
 import PriceCard from '../components/cart/PriceCard';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 import { FaEquals } from 'react-icons/fa';
 import Button from '../components/ui/Button';
+import useCart from '../hooks/useCart';
 
 const styles = ['simple', 'grand', 'deluxe'];
 const stylePrice = [0, 5000, 10000];
 
 export default function MyCart() {
   const { uid } = useAuthContext();
-  const { isLoading, data: menus } = useQuery(['carts'], () => getCart(uid));
+  const { cartQuery } = useCart();
+  const { isLoading, data: menus } = cartQuery;
   const [style, setStyle] = useState({
     selected: styles[0],
     price: stylePrice[0],
@@ -30,6 +30,8 @@ export default function MyCart() {
     setStyle({ selected: styles[index], price: stylePrice[index] });
   };
 
+  const handleOrder = (e) => {};
+
   return (
     <section className='p-8 flex flex-col mx-12'>
       <p className='text-2xl text-center font-bold pb-4 border-b border-gray-300'>
@@ -43,7 +45,7 @@ export default function MyCart() {
               menus.map((menu) => (
                 <CartItem key={menu.id} menu={menu} uid={uid}></CartItem>
               ))}
-            <div>
+            <div className='font-bold text-2xl'>
               <label htmlFor='select'></label>
               <select id='select' onChange={handleStyle}>
                 {styles.map((style, idx) => (
@@ -59,7 +61,7 @@ export default function MyCart() {
             <FaEquals />
             <PriceCard text='총가격' price={totalPrice + style.price} />
           </div>
-          <Button text='주문하기' />
+          <Button text='주문하기' onClick={handleOrder} />
         </>
       )}
     </section>

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { getAllMenu } from '../api/firebase';
-import { useQuery } from '@tanstack/react-query';
+import useMenu from '../hooks/useMenu';
 import MenuCard from '../components/menu/MenuCard';
 import MenuCategory from '../components/menu/MenuCategory';
 
 export default function Menu() {
-  const { isLoading, error, data: menu } = useQuery(['menu'], getAllMenu);
   const [category, setCategory] = useState('stake');
+  const {
+    menuQuery: { isLoading, error, data: menu },
+  } = useMenu();
 
   const handleCategory = (e, c) => {
     setCategory(c);
@@ -16,7 +17,7 @@ export default function Menu() {
     <section className='content-center text-center grid'>
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <MenuCategory onClick={handleCategory} />
+      <MenuCategory key='category' onClick={handleCategory} />
       {category && <h2 className='text-3xl mt-2'>{category}</h2>}
       {menu && category === 'stake' && (
         <ul className='grid grid-cols-1 p-10'>

@@ -100,6 +100,10 @@ export async function getAllMenu() {
     .catch(console.error);
 }
 
+export async function updateMenuById(id, category, menu) {
+  return db.set(db.ref(database, `menu/${category}/${id}`), menu);
+}
+
 export async function getMenuByCategory(category) {
   const categoryRef = db.ref(database, `menu/${category}`);
   return db.get(categoryRef).then((snapshot) => {
@@ -117,7 +121,7 @@ export async function getCart(userId) {
   });
 }
 
-export async function addOrupdateToCart(userId, menu) {
+export async function addOrUpdateToCart(userId, menu) {
   const option = menu.option ?? null;
   const updateMenu = { ...menu, option };
   return db.set(db.ref(database, `carts/${userId}/${menu.id}`), updateMenu);
@@ -125,4 +129,34 @@ export async function addOrupdateToCart(userId, menu) {
 
 export async function removeFromCart(userId, menuId) {
   return db.remove(db.ref(database, `carts/${userId}/${menuId}`));
+}
+
+export async function getAllOrder() {
+  return db
+    .get(db.ref(database, `orders`))
+    .then((snapshot) => {
+      const data = snapshot.val() || {};
+      return Object.values(data);
+    })
+    .catch(console.error);
+}
+
+export async function getOrderFromUser(userId) {
+  return db
+    .get(db.ref(database, `orders/${userId}`))
+    .then((snapshot) => {
+      const data = snapshot.val();
+      return data;
+    })
+    .catch(console.error);
+}
+
+export async function addOrderToUser(userId, cart) {
+  const id = uuid();
+  const order = { id, ...cart };
+  return db.set(db.ref(database, `orders/${userId}/${id}`), order);
+}
+
+export async function removeOrderFromUser(userId, orderId) {
+  return db.remove(db.ref(database, `orders/${userId}/${orderId}`));
 }
