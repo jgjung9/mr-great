@@ -8,7 +8,7 @@ export default function MenuDetail() {
   const { uid } = useAuthContext();
   const {
     state: {
-      menu: { id, image, name, description, category, price, options },
+      menu: { id, image, name, description, price, options },
     },
   } = useLocation();
   const [selected, setSelected] = useState(options && options[0]);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { addNewMenu, uploadImage } from '../api/firebase';
-import Button from './ui/Button';
+import { addNewMenu, uploadImage } from '../../api/firebase';
+import Button from '../ui/Button';
 
 export default function NewMenu() {
   const [menu, setMenu] = useState({});

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import { addOrupdateToCart, removeFromCart } from '../api/firebase';
+import { addOrupdateToCart, removeFromCart } from '../../api/firebase';
 
 const ICON_CLASS = 'transition-all cursor-pointer hover:scale-105 mx-1';
 

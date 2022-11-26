@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AdminCategory from '../components/AdminCategory';
-import NewMenu from '../components/NewMenu';
-import MenuManagement from '../components/MenuManagement';
-import OrderStatus from '../components/OrderStatus';
+import AdminCategory from '../components/admin/AdminCategory';
+import NewMenu from '../components/admin/NewMenu';
+import MenuManagement from '../components/admin/MenuManagement';
+import OrderStatus from '../components/admin/OrderStatus';
 
 export default function Admin() {
   const [category, setCategory] = useState('메뉴 등록');

@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import MenuDetail from './pages/MenuDetail';
 import MyCart from './pages/MyCart';
-import Order from './pages/Order';
 import MyPage from './pages/MyPage';
 import NotFound from './pages/NotFound';
 import reportWebVitals from './reportWebVitals';
@@ -24,7 +23,6 @@ const router = createBrowserRouter([
       { path: '/menu', element: <Menu /> },
       { path: '/menu/:id', element: <MenuDetail /> },
       { path: '/cart', element: <MyCart /> },
-      { path: '/order', element: <Order /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/admin', element: <Admin /> },
       { path: '/rider', element: <Rider /> },

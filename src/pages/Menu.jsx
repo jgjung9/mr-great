@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { getAllMenu } from '../api/firebase';
 import { useQuery } from '@tanstack/react-query';
-import MenuCard from '../components/MenuCard';
-import MenuCategory from '../components/MenuCategory';
+import MenuCard from '../components/menu/MenuCard';
+import MenuCategory from '../components/menu/MenuCategory';
 
 export default function Menu() {
   const { isLoading, error, data: menu } = useQuery(['menu'], getAllMenu);
