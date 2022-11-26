@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getAllMenu } from '../api/firebase';
 import { useQuery } from '@tanstack/react-query';
-import FoodCard from '../components/FoodCard';
+import MenuCard from '../components/MenuCard';
 import MenuCategory from '../components/MenuCategory';
 
 export default function Menu() {
@@ -19,31 +19,32 @@ export default function Menu() {
       <MenuCategory onClick={handleCategory} />
       {category && <h2 className='text-3xl mt-2'>{category}</h2>}
       {menu && category === 'stake' && (
-        <div className='justify-center mx-auto'>
-          <ul>
-            {Object.values(menu.stake).map((stake) => (
-              <FoodCard key={stake.id} food={stake} />
-            ))}
-          </ul>
-        </div>
+        <ul className='grid grid-cols-1 p-10'>
+          {Object.values(menu.stake).map((stake) => (
+            <MenuCard key={stake.id} menu={stake} />
+          ))}
+        </ul>
       )}
       {menu && category === 'wine' && (
-        <div className='justify-center mx-auto'>
-          <ul>
-            {Object.values(menu.wine).map((wine) => (
-              <FoodCard key={wine.id} food={wine} />
-            ))}
-          </ul>
-        </div>
+        <ul className='grid grid-cols-1 p-10'>
+          {Object.values(menu.wine).map((wine) => (
+            <MenuCard key={wine.id} menu={wine} />
+          ))}
+        </ul>
       )}
       {menu && category === 'side' && (
-        <div className='justify-center mx-auto'>
-          <ul>
-            {Object.values(menu.side).map((side) => (
-              <FoodCard key={side.id} food={side} />
-            ))}
-          </ul>
-        </div>
+        <ul className='grid grid-cols-1 p-10'>
+          {Object.values(menu.side).map((side) => (
+            <MenuCard key={side.id} menu={side} />
+          ))}
+        </ul>
+      )}
+      {menu && category === 'set' && (
+        <ul className='grid grid-cols-1 p-10'>
+          {Object.values(menu.set).map((set) => (
+            <MenuCard key={set.id} menu={set} />
+          ))}
+        </ul>
       )}
     </section>
   );

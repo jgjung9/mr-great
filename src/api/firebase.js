@@ -109,3 +109,20 @@ export async function getMenuByCategory(category) {
     return [];
   });
 }
+
+export async function getCart(userId) {
+  return db.get(db.ref(database, `carts/${userId}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    return Object.values(items);
+  });
+}
+
+export async function addOrupdateToCart(userId, menu) {
+  const option = menu.option ?? null;
+  const updateMenu = { ...menu, option };
+  return db.set(db.ref(database, `carts/${userId}/${menu.id}`), updateMenu);
+}
+
+export async function removeFromCart(userId, menuId) {
+  return db.remove(db.ref(database, `carts/${userId}/${menuId}`));
+}

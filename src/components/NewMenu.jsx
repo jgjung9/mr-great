@@ -45,7 +45,7 @@ export default function NewMenu() {
           alt='local file'
         />
       )}
-      <form className='flex flex-col px-40 ' onSubmit={handleSubmit}>
+      <form className='flex flex-col px-40 mx-40' onSubmit={handleSubmit}>
         <input
           type='file'
           accept='image/*'

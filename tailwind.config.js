@@ -3,8 +3,8 @@ module.exports = {
   content: ['./src/**/*.{js,jsx}'],
   theme: {
     extend: {
-      color: {
-        brand: '#77BBFF',
+      backgroundImage: {
+        banner: `url('../public/imgs/banner.jpg')`,
       },
     },
   },

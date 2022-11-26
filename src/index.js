@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
+import MenuDetail from './pages/MenuDetail';
 import MyCart from './pages/MyCart';
 import Order from './pages/Order';
 import MyPage from './pages/MyPage';
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, path: '/', element: <Home /> },
       { path: '/menu', element: <Menu /> },
+      { path: '/menu/:id', element: <MenuDetail /> },
       { path: '/cart', element: <MyCart /> },
       { path: '/order', element: <Order /> },
       { path: '/mypage', element: <MyPage /> },

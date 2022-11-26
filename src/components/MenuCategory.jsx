@@ -1,8 +1,7 @@
 import React from 'react';
-import Button from '../components/ui/Button';
 
 export default function MenuCategory({ onClick }) {
-  const category = ['stake', 'wine', 'side'];
+  const category = ['stake', 'wine', 'side', 'set'];
   return (
     <div className='text-2xl border-2'>
       {category.map((c) => (
@@ -10,6 +9,7 @@ export default function MenuCategory({ onClick }) {
           {c === 'side' && 'Side'}
           {c === 'stake' && 'Stake'}
           {c === 'wine' && 'Wine'}
+          {c === 'set' && 'Set'}
         </button>
       ))}
     </div>
