@@ -4,7 +4,7 @@ import useMenu from '../../hooks/useMenu';
 
 const ICON_CLASS = 'transition-all cursor-pointer hover:scale-105 mx-1';
 
-export default function StockCart({
+export default function StockCard({
   menu,
   menu: { id, image, name, category, count },
   uid,

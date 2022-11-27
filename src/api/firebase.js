@@ -160,3 +160,42 @@ export async function addOrderToUser(userId, cart) {
 export async function removeOrderFromUser(userId, orderId) {
   return db.remove(db.ref(database, `orders/${userId}/${orderId}`));
 }
+
+export async function getUserInfoById(userId) {
+  return db.get(db.ref(database, `user/${userId}`)).then((snapshot) => {
+    const data = snapshot.val();
+    return data;
+  });
+}
+
+export async function addAddressInfo(userId, addressInfo) {
+  const id = uuid();
+  const address = { id, ...addressInfo };
+  return db.set(db.ref(database, `user/${userId}/address/${id}`), address);
+}
+
+export async function addCardInfo(userId, cardInfo) {
+  const id = uuid();
+  const card = { id, ...cardInfo };
+  return db.set(db.ref(database, `user/${userId}/card/${id}`), card);
+}
+
+export async function getAllDelivery() {
+  return db.get(db.ref(database, `delivery`)).then((snapshot) => {
+    const data = snapshot.val();
+    return data;
+  });
+}
+
+export async function getDeliveryByUserId(uid) {
+  const deliveries = getAllDelivery();
+  const data = Object.values(deliveries).filter(
+    (delivery) => delivery.uid === uid
+  );
+  return data;
+}
+
+export async function addOrUpdateDelivery(uid, delivery) {
+  const id = uuid();
+  return db.set(db.ref(database, `delivery/${id}`), { ...delivery, id, uid });
+}

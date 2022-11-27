@@ -6,6 +6,7 @@ import { BsFillPlusCircleFill } from 'react-icons/bs';
 import { FaEquals } from 'react-icons/fa';
 import Button from '../components/ui/Button';
 import useCart from '../hooks/useCart';
+import { useNavigate } from 'react-router-dom';
 
 const styles = ['simple', 'grand', 'deluxe'];
 const stylePrice = [0, 5000, 10000];
@@ -18,6 +19,7 @@ export default function MyCart() {
     selected: styles[0],
     price: stylePrice[0],
   });
+  const navigate = useNavigate();
 
   if (isLoading) return <p>Loading...</p>;
   const hasMenus = menus && menus.length > 0;
@@ -30,7 +32,15 @@ export default function MyCart() {
     setStyle({ selected: styles[index], price: stylePrice[index] });
   };
 
-  const handleOrder = (e) => {};
+  const handleOrder = (e) => {
+    const cart = {
+      ...menus,
+      style: style.selected,
+      price: totalPrice + style.price,
+    };
+
+    navigate(`../order`, { state: { cart } });
+  };
 
   return (
     <section className='p-8 flex flex-col mx-12'>
