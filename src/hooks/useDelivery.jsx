@@ -18,7 +18,7 @@ export default function useDelivery() {
   });
 
   const addDelivery = useMutation(
-    ({ uid, delivery }) => addOrUpdateDelivery(uid, delivery),
+    ({ delivery }) => addOrUpdateDelivery(delivery),
     {
       onSuccess: () => queryClient.invalidateQueries('delivery'),
     }

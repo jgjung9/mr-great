@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  getOrderFromUser,
+  getAllOrder,
   addOrderToUser,
   removeOrderFromUser,
 } from '../api/firebase';
@@ -10,7 +10,7 @@ export default function useOrder() {
   const { uid } = useAuthContext();
   const queryClient = useQueryClient();
 
-  const orderQuery = useQuery(['orders'], () => getOrderFromUser(uid), {
+  const orderQuery = useQuery(['orders'], getAllOrder, {
     staleTime: 1000 * 60,
   });
 

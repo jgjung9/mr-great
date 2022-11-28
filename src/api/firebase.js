@@ -143,18 +143,19 @@ export async function getAllOrder() {
 
 export async function getOrderFromUser(userId) {
   return db
-    .get(db.ref(database, `orders/${userId}`))
+    .get(db.ref(database, `orders`))
     .then((snapshot) => {
       const data = snapshot.val();
-      return data;
+      return Object.values(data).filter((order) => order.uid === userId);
     })
     .catch(console.error);
 }
 
 export async function addOrderToUser(userId, cart) {
   const id = uuid();
-  const order = { id, ...cart };
-  return db.set(db.ref(database, `orders/${userId}/${id}`), order);
+  const time = new Date().toLocaleString();
+  const order = { id, uid: userId, ...cart, time };
+  return db.set(db.ref(database, `orders/${id}/`), order);
 }
 
 export async function removeOrderFromUser(userId, orderId) {
@@ -183,7 +184,7 @@ export async function addCardInfo(userId, cardInfo) {
 export async function getAllDelivery() {
   return db.get(db.ref(database, `delivery`)).then((snapshot) => {
     const data = snapshot.val();
-    return data;
+    return Object.values(data);
   });
 }
 
@@ -195,7 +196,8 @@ export async function getDeliveryByUserId(uid) {
   return data;
 }
 
-export async function addOrUpdateDelivery(uid, delivery) {
+export async function addOrUpdateDelivery(delivery) {
   const id = uuid();
-  return db.set(db.ref(database, `delivery/${id}`), { ...delivery, id, uid });
+  const time = new Date().toLocaleString();
+  return db.set(db.ref(database, `delivery/${id}`), { ...delivery, id, time });
 }
